@@ -1,3 +1,6 @@
+# Setting up Gilhari microservice
+Proceed to `/java_src/README.md` and follow the instructions there
+
 # Setting up project environment
 Follow these steps to set up your dev/testing environment
 
