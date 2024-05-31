@@ -43,4 +43,4 @@ Follow the above steps to set up both servers. Then in a new terminal located in
 run the command `python producer.py`
 
 ## Retrieving json data using the consumer
-run the command `python consumer.py`
+run the command `python consumer_client.py`
