@@ -40,10 +40,10 @@ run the commands
 `bin/zookeeper-server-stop.sh`
 
 # Running the project
-Follow the above steps to set up both servers. Then in a new terminal located in the root directory of the project, proceed to the following:
+Follow the above steps to set up both servers and the docker container. Then in a new terminal located in the root directory of the project, proceed to the following:
 
 ## Generate data using a producer application
-run the command `python producer.py`
+run the command `python src/producer.py`
 
 ## Retrieving json data using the consumer
-run the command `python consumer_client.py`
+run the command `python src/consumer_client.py`
