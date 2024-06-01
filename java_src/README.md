@@ -4,7 +4,7 @@ This file lists out the steps taken to configure the Gilhari microservice along 
 ## Step 1. Define and compile empty Java (container) class
 In `src/main/java/models`, create a class file `JSON_Employee.java` as shown to create a JDX_JSONObject (derived from Software Tree's JDX).\
 In the `lib/` directory, add the requirements as `.jar` files (here, a json package and `jxclasses.jar`, found in the JDX installation).\
-In a terminal, `cd` to `./java_src` and run the command `javac -cp "lib/json20240303.jar:lib/jxclasses.jar" -d bin src/main/java/models/JSON_Employee.java`
+In a terminal, `cd` to `./java_src` and run the command `javac -cp "lib/json-20240303.jar:lib/jxclasses.jar" -d bin src/main/java/models/JSON_Employee.java`
 
 ## Step 2. Define a declarative Object Relational Mapping (ORM) specification and Gilhari configuration
 In `config/`, create a file named `java_src.jdx` as shown. (This example uses a postgresql database running outside of the Gilhari microservice docker container).\
