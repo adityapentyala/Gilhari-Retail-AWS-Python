@@ -53,15 +53,6 @@ def handle_response(response):
     else:
         response.raise_for_status()
 
-consumer = KafkaConsumer(
-    'Employees',
-    bootstrap_servers=['localhost:9092'],
-    auto_offset_reset='earliest',
-    enable_auto_commit=True,
-    group_id='my-group',
-    value_deserializer=json_deserializer
-)
-
 def consume_stream(uptime):
     """
     Creates a KafkaConsumer to listen to the Kafka stream and adds data to the db using the Gihari API
