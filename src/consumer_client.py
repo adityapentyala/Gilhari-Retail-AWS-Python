@@ -53,18 +53,19 @@ def handle_response(response):
     else:
         response.raise_for_status()
 
-def consume_stream(uptime):
+def consume_stream(uptime, topics: list[str]):
     """
     Creates a KafkaConsumer to listen to the Kafka stream and adds data to the db using the Gihari API
 
     Args:
         uptime: int - Time in seconds for which consumer should remain active
+        topics: list[str] - list of topics to consume
     
     returns:
         None
     """
     consumer = KafkaConsumer(
-        'Employees',
+        *topics,
         bootstrap_servers=['localhost:9092'],
         auto_offset_reset='earliest',
         enable_auto_commit=True,
@@ -73,10 +74,11 @@ def consume_stream(uptime):
         consumer_timeout_ms=uptime*1000
     )
     for message in consumer:
-        print(f"{message.value}")
-        response = insert_json_data("Employee", json=message.value)
-        print(response)
+        print(f"{message.value} from {message.topic}")
+        #consumer.commit()
+        #response = insert_json_data("Employee", json=message.value)
+        #print(response)
     return None
 
 if __name__ == "__main__":
-    consume_stream(100)
+    consume_stream(100, ["Employees", "Sales"])
