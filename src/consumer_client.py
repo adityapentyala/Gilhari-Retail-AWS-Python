@@ -35,6 +35,19 @@ def insert_json_data(endpoint, json=None, headers=None, data=None):
     response = requests.post(f'{BASE_URL}/{endpoint}/', data=data, json=json, headers=headers)
     return handle_response(response)
 
+def get_attribute_value(endpoint, key, id, attribute):
+    try:
+        response = requests.get(f'{BASE_URL}/{endpoint}/getObjectById?filter={key}={id}')
+        print(response.json())
+        #print(json.loads(response.json)[attribute])
+        return (response.json())[attribute]
+    except:
+        return "null"
+
+def update_attribute_value(endpoint, key, id, attribute, new_value):
+    response = requests.patch(f'{BASE_URL}/{endpoint}?filter={key}={id}', json={"newValues":[attribute, new_value]})
+    return handle_response(response)
+
 def handle_response(response):
     """
     Handles response received from API request
@@ -75,10 +88,23 @@ def consume_stream(uptime, topics: list[str]):
     )
     for message in consumer:
         print(f"{message.value} from {message.topic}")
-        #consumer.commit()
-        #response = insert_json_data("Employee", json=message.value)
-        #print(response)
+        if message.topic == "Employees":
+            response = insert_json_data("Employees", json=message.value)
+            print(response)
+        elif message.topic == "Sales":
+            response = insert_json_data("Sales", json=message.value)
+            quantity = get_attribute_value("Inventory", "itemID", message.value["entity"]["itemID"], "quantity")
+            response = update_attribute_value("Inventory", "itemID", message.value["entity"]["itemID"], "quantity",
+                                              quantity-message.value["entity"]["quantity"])
+        elif message.topic == "Inventory":
+            quantity = get_attribute_value("Inventory", "itemID", message.value["entity"]["itemID"], "quantity")
+            print(quantity)
+            if quantity != "null":
+                response = update_attribute_value("Inventory", "itemID", message.value["entity"]["itemID"], "quantity",
+                                              quantity+message.value["entity"]["quantity"])
+            else:
+                response = insert_json_data("Inventory", json=message.value)
     return None
 
 if __name__ == "__main__":
-    consume_stream(100, ["Employees", "Sales"])
+    consume_stream(100, ["Employees", "Sales", "Inventory"])
