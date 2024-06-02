@@ -1,5 +1,6 @@
 """
-Producer script that sends json data to a Kafka stream for the consumer client to receive
+Producer script that sends json data to a Kafka stream for the consumer client to receive. This particular script sends
+sales related data/transactions, that is, subtractions from inventory
 """
 from kafka import KafkaProducer
 import json

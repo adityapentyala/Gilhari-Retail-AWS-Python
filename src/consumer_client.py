@@ -36,6 +36,18 @@ def insert_json_data(endpoint, json=None, headers=None, data=None):
     return handle_response(response)
 
 def get_attribute_value(endpoint, key, id, attribute):
+    """
+    Returns the value of the specified attribute of a selected record in the database
+
+    Args:
+        endpoint: str - the endpoint (table) to select from
+        key: str - the column to select from
+        id: Any - the value the key of the record must take (crudely, the row)
+        attribute: str - the column whose value in the selected record is to be returned
+    
+    returns:
+        Any, str
+    """
     try:
         response = requests.get(f'{BASE_URL}/{endpoint}/getObjectById?filter={key}={id}')
         print(response.json())
@@ -45,6 +57,19 @@ def get_attribute_value(endpoint, key, id, attribute):
         return "null"
 
 def update_attribute_value(endpoint, key, id, attribute, new_value):
+    """
+    Updates the value of the specified attribute (column) of a selected record in the database
+
+    Args:
+        endpoint: str - the endpoint (table) to select from
+        key: str - the column to select from
+        id: Any - the value the key of the record must take (crudely, the row)
+        attribute: str - the column whose value in the selected record is to be updated
+        new_value: Any - the value to update the record's attribute with
+    
+    returns:
+        Any
+    """
     response = requests.patch(f'{BASE_URL}/{endpoint}?filter={key}={id}', json={"newValues":[attribute, new_value]})
     return handle_response(response)
 
@@ -69,6 +94,7 @@ def handle_response(response):
 def consume_stream(uptime, topics: list[str]):
     """
     Creates a KafkaConsumer to listen to the Kafka stream and adds data to the db using the Gihari API
+    Checks for topics and makes requests to the API using the topic as the endpoint
 
     Args:
         uptime: int - Time in seconds for which consumer should remain active
@@ -89,14 +115,26 @@ def consume_stream(uptime, topics: list[str]):
     for message in consumer:
         print(f"{message.value} from {message.topic}")
         if message.topic == "Employees":
+            """
+            Employee data can be added to the Employee table as-is
+            """
             response = insert_json_data("Employees", json=message.value)
             print(response)
         elif message.topic == "Sales":
+            """
+            A sale can be added to the Sales table as-is, but must also reduce the quantity of the object
+            sold in the inventory by the sale quantity
+            """
             response = insert_json_data("Sales", json=message.value)
             quantity = get_attribute_value("Inventory", "itemID", message.value["entity"]["itemID"], "quantity")
             response = update_attribute_value("Inventory", "itemID", message.value["entity"]["itemID"], "quantity",
                                               quantity-message.value["entity"]["quantity"])
         elif message.topic == "Inventory":
+            """
+            Inventory must contain a fixed number of items at its maximum. Hence, transactions cannot be recorded 
+            in the Inventory table as-is, but must add to the quantity of a pre-existing item, or create a new 
+            item if it does not exist as a record already
+            """
             quantity = get_attribute_value("Inventory", "itemID", message.value["entity"]["itemID"], "quantity")
             print(quantity)
             if quantity != "null":
