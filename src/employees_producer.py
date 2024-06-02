@@ -40,7 +40,7 @@ def produce_stream(up_time, producer):
     returns:
         None
     """
-    count=2
+    count=1
     time.sleep(4)
     start_time = time.time()
 

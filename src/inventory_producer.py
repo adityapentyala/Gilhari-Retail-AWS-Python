@@ -40,17 +40,17 @@ def produce_stream(up_time, producer):
     returns:
         None
     """
-    count=1
+    count=2
     time.sleep(4)
     start_time = time.time()
     sample_items = ["Apples", "Bananas", "Pears", "Strawberries", "Cherries", "Kiwi", "Orange", "Watermelon"]
     current_time = time.time()
     while current_time-start_time<up_time:
         choice = random.randint(0, len(sample_items)-1)
-        sale = {"entity":{"id":count, "quantity":random.randint(1,5), "date":random.randint(10000, 50000),
+        item = {"entity":{"quantity":random.randint(1,5)*25, "date":random.randint(10000, 50000),
                           "itemName":sample_items[choice], "itemID":choice}}
-        producer.send("Sales", sale)
-        print(sale)
+        producer.send("Inventory", item)
+        print(item)
         current_time = time.time()
         count+=1
         time.sleep(random.randint(3,7))
