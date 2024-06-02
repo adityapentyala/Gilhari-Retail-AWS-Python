@@ -2,7 +2,7 @@ JDX_DATABASE JDX:jdbc:postgresql://host.docker.internal:5432/gilharikafkadb;USER
 JDBC_DRIVER org.postgresql.Driver
 ;
 REM ************************************************************************
-CLASS java_src.src.main.java.models.JSON_Employee TABLE Employee
+CLASS java_src.src.main.java.models.JSON_Employee TABLE Employees
 
   // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
   VIRTUAL_ATTRIB id ATTRIB_TYPE int
@@ -17,4 +17,35 @@ CLASS java_src.src.main.java.models.JSON_Employee TABLE Employee
   // Now provide the rest of the mapping specification for this class
   PRIMARY_KEY id
   SQLMAP FOR compensation COLUMN_NAME salary
+;
+
+CLASS java_src.src.main.java.models.JSON_Sale TABLE Sales
+
+  // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
+  VIRTUAL_ATTRIB id ATTRIB_TYPE int
+  VIRTUAL_ATTRIB itemID ATTRIB_TYPE int
+  VIRTUAL_ATTRIB itemName ATTRIB_TYPE java.lang.String
+  VIRTUAL_ATTRIB quantity ATTRIB_TYPE double
+
+  // date is represented as long (number of milliseconds) for a JSON
+  // object since there is no standard JSON string format for date representation
+  VIRTUAL_ATTRIB date ATTRIB_TYPE long
+
+  // Now provide the rest of the mapping specification for this class
+  PRIMARY_KEY id 
+;
+
+CLASS java_src.src.main.java.models.JSON_InventoryItem TABLE Inventory
+
+  // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
+  VIRTUAL_ATTRIB itemID ATTRIB_TYPE int
+  VIRTUAL_ATTRIB itemName ATTRIB_TYPE java.lang.String
+  VIRTUAL_ATTRIB quantity ATTRIB_TYPE double
+
+  // date is represented as long (number of milliseconds) for a JSON
+  // object since there is no standard JSON string format for date representation
+  VIRTUAL_ATTRIB date ATTRIB_TYPE long
+
+  // Now provide the rest of the mapping specification for this class
+  PRIMARY_KEY itemID
 ;
