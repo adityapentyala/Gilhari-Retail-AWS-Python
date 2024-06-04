@@ -68,7 +68,7 @@ run the commands `python src/inventory_producer.py`, `python src/employees_produ
 **NOTE**: The sales transactions require there to be inventory records as in any retail business.\
 There exists no explicit code to populate the inventory.\
 You must run just the inventory production driver and consumer to first populate the inventory.\
-Then you may run all 3 producers with the consume simultaneously. 
+Then you may run all 3 producers with the consumer simultaneously. 
 
 ## Retrieving json data using the consumer
 run the command `python src/consumer_client.py`
