@@ -1,4 +1,4 @@
-package java_src.src.main.java.models;
+package Gilhari9.src.main.java.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;

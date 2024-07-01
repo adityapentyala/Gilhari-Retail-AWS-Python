@@ -1,5 +1,9 @@
-JDX_DATABASE JDX:jdbc:postgresql://host.docker.internal:5432/gilharikafkadb;USER=postgres;PASSWORD=psql;JDX_DBTYPE=POSTGRES;DEBUG_LEVEL=3
-JDBC_DRIVER org.postgresql.Driver
+// JDX_DATABASE JDX:jdbc:postgresql://host.docker.internal:5432/gilharikafkadb;USER=postgresql;PASSWORD=psql;JDX_DBTYPE=POSTGRES;DEBUG_LEVEL=1
+// JDBC_DRIVER org.postgresql.Driver
+
+JDX_DATABASE JDX:jdbc:mysql://host.docker.internal:3306/gilharikafkadb?sslMode=DISABLED&allowPublicKeyRetrieval=true;USER=mysqluser;PASSWORD=mysqlpassword;JDX_DBTYPE=MYSQL;DEBUG_LEVEL=3
+
+JDBC_DRIVER com.mysql.cj.jdbc.Driver
 ;
 REM ************************************************************************
 CLASS java_src.src.main.java.models.JSON_Employee TABLE Employees

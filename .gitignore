@@ -1,4 +1,6 @@
 /gilhari-kafka-env
-/java_src/bin
-/java_src/lib
-/java_src/config/*.jar
+/Gilhari9/bin
+/Gilhari9/lib
+/Gilhari9/config/*.jar
+*.deb
+/Gilhari9/usr
