@@ -1,15 +1,18 @@
-// JDX_DATABASE JDX:jdbc:postgresql://host.docker.internal:5432/gilharikafkadb;USER=postgresql;PASSWORD=psql;JDX_DBTYPE=POSTGRES;DEBUG_LEVEL=1
+// JDX_DATABASE JDX:jdbc:postgresql://host.docker.internal:5433/postgres;USER=postgres;PASSWORD=password;JDX_DBTYPE=POSTGRES;DEBUG_LEVEL=5
 // JDBC_DRIVER org.postgresql.Driver
 
-JDX_DATABASE JDX:jdbc:mysql://host.docker.internal:3306/gilharikafkadb?sslMode=DISABLED&allowPublicKeyRetrieval=true;USER=mysqluser;PASSWORD=mysqlpassword;JDX_DBTYPE=MYSQL;DEBUG_LEVEL=3
+JDX_DATABASE JDX:jdbc:sqlite:./config/gilhariexample.db;USER=sa;PASSWORD=sa;JDX_DBTYPE=SQLITE;DEBUG_LEVEL=5
+JDBC_DRIVER org.sqlite.JDBC
 
-JDBC_DRIVER com.mysql.cj.jdbc.Driver
+// JDX_DATABASE JDX:jdbc:mysql://host.docker.internal:3306/gilharikafkadb?sslMode=DISABLED&allowPublicKeyRetrieval=true;USER=mysqluser;PASSWORD=mysqlpassword;JDX_DBTYPE=MYSQL;DEBUG_LEVEL=3
+
+// JDBC_DRIVER com.mysql.cj.jdbc.Driver
 ;
 REM ************************************************************************
-CLASS java_src.src.main.java.models.JSON_Employee TABLE Employees
+CLASS Gilhari9.src.main.java.models.JSON_Employee TABLE Employees
 
   // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
-  VIRTUAL_ATTRIB id ATTRIB_TYPE int
+  VIRTUAL_ATTRIB id ATTRIB_TYPE long
   VIRTUAL_ATTRIB name ATTRIB_TYPE java.lang.String
   VIRTUAL_ATTRIB exempt ATTRIB_TYPE boolean
   VIRTUAL_ATTRIB compensation ATTRIB_TYPE double
@@ -23,11 +26,11 @@ CLASS java_src.src.main.java.models.JSON_Employee TABLE Employees
   SQLMAP FOR compensation COLUMN_NAME salary
 ;
 
-CLASS java_src.src.main.java.models.JSON_Sale TABLE Sales
+CLASS Gilhari9.src.main.java.models.JSON_Sale TABLE Sales
 
   // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
-  VIRTUAL_ATTRIB id ATTRIB_TYPE int
-  VIRTUAL_ATTRIB itemID ATTRIB_TYPE int
+  VIRTUAL_ATTRIB id ATTRIB_TYPE long
+  VIRTUAL_ATTRIB itemID ATTRIB_TYPE long
   VIRTUAL_ATTRIB itemName ATTRIB_TYPE java.lang.String
   VIRTUAL_ATTRIB quantity ATTRIB_TYPE double
 
@@ -39,10 +42,10 @@ CLASS java_src.src.main.java.models.JSON_Sale TABLE Sales
   PRIMARY_KEY id 
 ;
 
-CLASS java_src.src.main.java.models.JSON_InventoryItem TABLE Inventory
+CLASS Gilhari9.src.main.java.models.JSON_InventoryItem TABLE Inventory
 
   // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
-  VIRTUAL_ATTRIB itemID ATTRIB_TYPE int
+  VIRTUAL_ATTRIB itemID ATTRIB_TYPE long
   VIRTUAL_ATTRIB itemName ATTRIB_TYPE java.lang.String
   VIRTUAL_ATTRIB quantity ATTRIB_TYPE double
 
