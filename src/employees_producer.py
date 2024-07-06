@@ -48,7 +48,7 @@ def produce_stream(up_time, producer):
     current_time = time.time()
     while current_time-start_time<up_time:
         emp = {"entity":{"id":count, "exempt":random.choice([True, False]), "compensation":random.randint(1,10)*100000, 
-               "name":f"emp{count}", "DOB":random.randint(100000,200000)}}
+               "name":f"emp{count}", "DOB":int(time.time())}}
         producer.send("Employees", emp)
         print(emp)
         current_time = time.time()

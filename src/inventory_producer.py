@@ -48,7 +48,7 @@ def produce_stream(up_time, producer):
     current_time = time.time()
     while current_time-start_time<up_time:
         choice = random.randint(0, len(sample_items)-1)
-        item = {"entity":{"quantity":random.randint(1,5)*25, "date":random.randint(10000, 50000),
+        item = {"entity":{"quantity":random.randint(1,5)*25, "date":int(time.time()),
                           "itemName":sample_items[choice], "itemID":choice}}
         producer.send("Inventory", item)
         print(item)
