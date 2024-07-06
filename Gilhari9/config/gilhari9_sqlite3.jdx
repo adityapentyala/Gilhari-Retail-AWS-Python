@@ -1,4 +1,4 @@
-// JDX_DATABASE JDX:jdbc:postgresql://host.docker.internal:5433/postgres;USER=postgres;PASSWORD=password;JDX_DBTYPE=POSTGRES;DEBUG_LEVEL=5
+// JDX_DATABASE JDX:jdbc:postgresql://host.docker.internal:5433/gilharikafkadb;USER=postgres;PASSWORD=password;JDX_DBTYPE=POSTGRES;DEBUG_LEVEL=5
 // JDBC_DRIVER org.postgresql.Driver
 
 JDX_DATABASE JDX:jdbc:sqlite:./config/gilhariexample.db;USER=sa;PASSWORD=sa;JDX_DBTYPE=SQLITE;DEBUG_LEVEL=5

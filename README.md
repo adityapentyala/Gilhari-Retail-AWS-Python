@@ -1,5 +1,10 @@
 # Retail Management System using Apache Kafka Streaming Service with Gilhari
-This is a case-based example of how to use the Gilhari microservice framework to transfer json data from an Apache Kafka streaming server to a PostgreSQL database.
+
+## About Gilhari
+This project uses Gilhari microservice framework to exchange JSON data with relational databases. Gilhari is a product of Software Tree, LLC. GilhariTM is a microservice framework to provide persistence for JSON objects in relational databases. Available in a Docker image, it is configurable as per an app-specific object and relational models. Gilhari exposes a REST (REpresentational State Transfer) interface to provide APIs (POST, GET, PUT, DELETE…) for CRUD (Create, Retrieve, Update, and Delete) operations on the app-specific JSON objects. You may get more information about Gilhari and its SDK at https://www.softwaretree.com.
+
+## About the Project
+This is a case-based example of how to use the Gilhari microservice framework to transfer json data from an Apache Kafka streaming server to a PostgreSQL/MySQL/SQLite database.
 * This project simulates a retail business in which 3 types of data - Employee data (as hires), Sales data (as sales transactions), and Inventory data (as shipment transactions) are being continuously generated.
 * 3 tables exist in the database to record such information:
     1. Employee
@@ -11,15 +16,25 @@ This is a case-based example of how to use the Gilhari microservice framework to
 * The producers and consumer scripts run independent of one another.
 * Notice that using the Gilhari microservice framework in the consumer program eliminates the need to write any SQL code for storing JSON data in a relational database.\
 Gilhari does not require any database native JSON data type. \
-Also, the database-agnostic framework of Gilhari makes it very easy to switch the backend relational database (e.g., from Postgres to MySQL) without having to write any code.
+Also, the database-agnostic framework of Gilhari makes it very easy to switch the backend relational database (e.g., from Postgres to MySQL/SQLite) without having to write any code.
 
-The steps to configure Gilhari, the PostgreSQL database, Kafka, the project environment and the steps to run the project are given below.
+The steps to configure Gilhari, the database(s), Kafka, the project environment and the steps to run the project are given below.
 
 # Setting up Gilhari microservice
-Proceed to `/java_src/README.md` and follow the instructions there
+Proceed to `/Gilhari9/README.md` and follow the instructions there
 
-# Setting up the PostgreSQL database
-With a user `postgres` and password `psql`, create a new database called `gilharikafkadb`
+# Setting up the database
+The `.jdx` ORM file in `Gilhari9/config/` contains the mapping commands for each of these databases. To change, simply comment out the ones that are not in use, and change the path to the JDBC driver in `Gilhari9/gilhari_service.config` to the respective database's JDBC driver `.jar` file. 
+## PostgreSQL
+With a user `postgres` and password `psql`, create a new database called `gilharikafkadb`. Run the server on localhost at port 5432.
+
+## MySQL
+With a user `mysqluser` and password `mysqlpassword`, create a new database called `gilharikafkadb`. Run the server on localhost at port 3306.
+
+*NOTE: You may change the authentication details and port numbers for each of the above databases. Make sure you change the same in the `.jdx` ORM file.*
+
+## SQLite
+No authentication details are required. Simply make sure that the docker container is mapped to a local volume so that changes made by gilhari are reflected in the local volume and persist even after the container is stopped. Details on the CLI argument to be passed to ensure this are given in the `README.md` file in `Gilhari9/`.
 
 # Setting up project environment
 Follow these steps to set up your dev/testing environment
