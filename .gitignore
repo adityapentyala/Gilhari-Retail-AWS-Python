@@ -4,3 +4,6 @@
 /Gilhari9/config/*.jar
 *.deb
 /Gilhari9/usr
+*.db
+*.config
+*.jdx

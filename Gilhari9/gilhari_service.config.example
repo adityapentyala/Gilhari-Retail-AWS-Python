@@ -1,0 +1,9 @@
+{"jdx_orm_spec_file": "./config/gilhari9_sqlite3.jdx",  
+"jdbc_driver_path": "./config/postgresql-42.7.3.jar",  
+"db_username": "YOUR_RDS_INSTANCE_USERNAME",  
+"db_password": "YOUR_RDS_INSTANCE_PASSWORD",  
+"jdx_debug_level": 5,  
+"jdx_force_create_schema": "false",  
+"jdx_persistent_classes_location": "./bin",  
+"classnames_map_file": "./config/classNameMapping.js",  
+"gilhari_rest_server_port": 8081}

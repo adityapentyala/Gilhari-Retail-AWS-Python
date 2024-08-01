@@ -1,25 +1,18 @@
-// JDX_DATABASE JDX:jdbc:postgresql://host.docker.internal:5433/gilharikafkadb;USER=postgres;PASSWORD=password;JDX_DBTYPE=POSTGRES;DEBUG_LEVEL=5
-// JDBC_DRIVER org.postgresql.Driver
-
-JDX_DATABASE JDX:jdbc:sqlite:./config/gilhariexample.db;USER=sa;PASSWORD=sa;JDX_DBTYPE=SQLITE;DEBUG_LEVEL=5
-JDBC_DRIVER org.sqlite.JDBC
-
-// JDX_DATABASE JDX:jdbc:mysql://host.docker.internal:3306/gilharikafkadb?sslMode=DISABLED&allowPublicKeyRetrieval=true;USER=mysqluser;PASSWORD=mysqlpassword;JDX_DBTYPE=MYSQL;DEBUG_LEVEL=3
-
-// JDBC_DRIVER com.mysql.cj.jdbc.Driver
+JDX_DATABASE JDX:jdbc:postgresql://YOUR_RDS_INSTANCE_ENDPOINT:5432/DB_NAME;USER=YOUR_RDS_INSTANCE_USERNAME;PASSWORD=YOUR_RDS_INSTANCE_PASSWORD;JDX_DBTYPE=POSTGRES;DEBUG_LEVEL=5
+JDBC_DRIVER org.postgresql.Driver
 ;
 REM ************************************************************************
 CLASS Gilhari9.src.main.java.models.JSON_Employee TABLE Employees
 
   // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
-  VIRTUAL_ATTRIB id ATTRIB_TYPE long
+  VIRTUAL_ATTRIB id ATTRIB_TYPE int
   VIRTUAL_ATTRIB name ATTRIB_TYPE java.lang.String
   VIRTUAL_ATTRIB exempt ATTRIB_TYPE boolean
   VIRTUAL_ATTRIB compensation ATTRIB_TYPE double
 
   // date is represented as long (number of milliseconds) for a JSON
   // object since there is no standard JSON string format for date representation
-  VIRTUAL_ATTRIB DOB ATTRIB_TYPE long
+  VIRTUAL_ATTRIB DOB ATTRIB_TYPE int
 
   // Now provide the rest of the mapping specification for this class
   PRIMARY_KEY id
@@ -29,14 +22,14 @@ CLASS Gilhari9.src.main.java.models.JSON_Employee TABLE Employees
 CLASS Gilhari9.src.main.java.models.JSON_Sale TABLE Sales
 
   // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
-  VIRTUAL_ATTRIB id ATTRIB_TYPE long
-  VIRTUAL_ATTRIB itemID ATTRIB_TYPE long
+  VIRTUAL_ATTRIB id ATTRIB_TYPE int
+  VIRTUAL_ATTRIB itemID ATTRIB_TYPE int
   VIRTUAL_ATTRIB itemName ATTRIB_TYPE java.lang.String
   VIRTUAL_ATTRIB quantity ATTRIB_TYPE double
 
   // date is represented as long (number of milliseconds) for a JSON
   // object since there is no standard JSON string format for date representation
-  VIRTUAL_ATTRIB date ATTRIB_TYPE long
+  VIRTUAL_ATTRIB date ATTRIB_TYPE int
 
   // Now provide the rest of the mapping specification for this class
   PRIMARY_KEY id 
@@ -45,13 +38,13 @@ CLASS Gilhari9.src.main.java.models.JSON_Sale TABLE Sales
 CLASS Gilhari9.src.main.java.models.JSON_InventoryItem TABLE Inventory
 
   // First declare all the persistent JSON properties using VIRTUAL_ATTRIB specifications
-  VIRTUAL_ATTRIB itemID ATTRIB_TYPE long
+  VIRTUAL_ATTRIB itemID ATTRIB_TYPE int
   VIRTUAL_ATTRIB itemName ATTRIB_TYPE java.lang.String
   VIRTUAL_ATTRIB quantity ATTRIB_TYPE double
 
   // date is represented as long (number of milliseconds) for a JSON
   // object since there is no standard JSON string format for date representation
-  VIRTUAL_ATTRIB date ATTRIB_TYPE long
+  VIRTUAL_ATTRIB date ATTRIB_TYPE int
 
   // Now provide the rest of the mapping specification for this class
   PRIMARY_KEY itemID
