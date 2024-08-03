@@ -6,6 +6,7 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ## About Gilhari
 This project uses Gilhari microservice framework to exchange JSON data with relational databases. Gilhari is a product of Software Tree, LLC. GilhariTM is a microservice framework to provide persistence for JSON objects in relational databases. Available in a Docker image, it is configurable as per an app-specific object and relational models. Gilhari exposes a REST (REpresentational State Transfer) interface to provide APIs (POST, GET, PUT, DELETE…) for CRUD (Create, Retrieve, Update, and Delete) operations on the app-specific JSON objects. You may get more information about Gilhari and its SDK at https://www.softwaretree.com.
 
@@ -25,6 +26,8 @@ Gilhari does not require any database native JSON data type. \
 Also, the database-agnostic framework of Gilhari makes it very easy to switch the backend relational database (e.g., from Postgres to MySQL/SQLite) without having to write any code.
 
 The steps to configure Gilhari, the database(s), Kafka, the project environment and the steps to run the project are given below.
+
+The project has also been deployed to AWS' RDS and EC2 to demonstrate Gilhari's seamless integration with cloud instances.
 
 # Setting up Gilhari microservice
 Proceed to `/Gilhari9/README.md` and follow the instructions there
@@ -93,3 +96,42 @@ Then you may run all 3 producers with the consumer simultaneously.
 
 ## Retrieving json data using the consumer
 run the command `python src/consumer_client.py`
+
+# Deploying to AWS
+Deploying the project to AWS consists of 3 parts - creating a database instance, pushing the project-specific Gilhari image to an ECR repository, and then creating an EC2 instance that allows one to pull the docker image and run the rest of the source code.
+
+## Setting up PostgreSQL RDS database instance
+To do this, a Postgresql database must be created created using Amazon RDS(Relational Database Service) with public access to its IP. \
+* To avoid any issues the security group must be configured with inbound and outbound rules such that IPV4 and IPV6 traffic from one's system is allowed to access the database and bypass the firewall else Gilhari would be unable to connect to the database. 
+* Following this, in the ORM file we provide the link in the format `YOUR_RDS_INSTANCE_ENDPOINT:5432/DB_NAME` where `YOUR_RDS_INSTANCE_ENDPOINT` refers to the endpoint that is provided by AWS and can be copied from the webpage showing the details of the database being hosted. 
+* Username and password used must also be mentioned in the ORM file to allow Gilhari access to the database. One must also ensure to delete the database instance once usage of it is completed as merely stopping the instance does not prevent getting charged as it incurs storage costs.
+
+## Pushing Project-Specific Gilhari Image to an ECR Repository
+This step involves setting up a public repository on Amazon Elastic Container Registry(ECR) with some repo name. Following this the AWS Command Line Interface must be installed to run aws commands to push the docker image of Gilhari to ECR.\
+* An IAM user must be created with policies of AmazonEC2ContainerRegistryFullAccess and AmazonElasticContainerRegistryPublicFullAccess attached. 
+* An access key is created in the security credentials tab of the user and the access key and secret access key is used when we open the CLI and type aws configure which prompts an answer to the above categories.
+* The commands to push a docker image to the registry are as mentioned in the view push commands option seen when the repository is clicked. Those commands are to be copied and pasted exactly as mentioned.
+* Upon completion of this step, the image will be available in the created repository, from which it can be pulled by an EC2 instance
+
+## Deploying Source Code to an EC2 Instance
+This step involves creating a public cluster in Amazon Elastic Cluster Service with Amazon EC2 instances for the infrastructure. 
+* A SSH key pair is also to be created using a .pem file format. The same security group that we used to connect to RDS is also used here. One must also ensure that for the Auto Assign Public IP section, the option of ‘turn on’ must be selected.
+* After an EC2 instance is created, one may connect to it using the SSH private key. On clicking the instance id, one must click the connect button and go to the SSH client tab. On going to the directory housing the downloaded key1.pem file through the terminal, run the command given under example of the SSH client tab.
+* Pull the docker image from the ECR repository created in the previous step to run the Gilhari microservice.
+* Install Kafka onto the EC2 instance.
+* Pull the git repository with the source code onto the EC2 instance. From there, one may follow the same steps to run the project as given previously.
+
+# Demo of the Project running on AWS
+![demo gif](assets/aws_demo.gif)
+The above gif shows the various services running simultaneously on the EC2 instance. Individual services are tagged in the following screenshots.
+
+### Gilhari microservice running in docker container
+![Gilhari microservice running in docker container](assets/gilhari_bash.png)
+### Zookeeper server
+![zookeeper server](assets/zookeeper_bash.png)
+### Kafka server
+![kafka server](assets/kafka_bash.png)
+### Producers Running Together
+![producers running together](assets/producers_bash.png)
+### Consumer pushing data to PostgreSQL instance via Gilhari
+![consumer](assets/consumer_bash.png)
