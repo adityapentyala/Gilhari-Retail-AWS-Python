@@ -1,4 +1,4 @@
-# Gilhari Setup and Configuration
+# Creating the Project-Specific Gilhari Image
 This file lists out the steps taken to configure the Gilhari microservice along with JDX ORM. In this example, the classes named Employee, InventoryItem and Sale are created and mapped as follows.
 
 ## Step 1. Define and compile empty Java (container) class

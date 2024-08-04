@@ -30,7 +30,7 @@ The steps to configure Gilhari, the database(s), Kafka, the project environment 
 The project has also been deployed to AWS' RDS and EC2 to demonstrate Gilhari's seamless integration with cloud instances.
 
 # Setting up Gilhari microservice
-Proceed to `/Gilhari9/README.md` and follow the instructions there
+Proceed to `/Gilhari9/README.md` and follow the instructions there to create a project-specific Gilhari image.
 
 # Setting up the database
 The `.jdx` ORM file in `Gilhari9/config/` contains the mapping commands for each of these databases. To change, simply comment out the ones that are not in use, and change the path to the JDBC driver in `Gilhari9/gilhari_service.config` to the respective database's JDBC driver `.jar` file. 
